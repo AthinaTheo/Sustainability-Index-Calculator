@@ -4,7 +4,6 @@ close all
 
 % Calculation of the SI for all the configurations
 
-MERGED=xlsread('MERGED_KE_HY.xlsx');
 
 td_norm=zeros(length(MERGED), 1);  
 eig_norm=zeros(length(MERGED), 1);
@@ -42,7 +41,6 @@ for i=1:length(MERGED)
     c_norm(i)=1-(MERGED(i,7)-c_min)/(c_max-c_min);
     e_norm(i)=1-(MERGED(i,8)-e_min)/(e_max-e_min);
 
-    S_I(i)=0.09.*perf(i)+0.09.*c_norm(i)+0.64.*e_norm(i)+0.09.*MERGED(i,9)+0.09.*MERGED(i,10);  % Sustainability Index
 
    config(i)=i;
 end
@@ -53,4 +51,3 @@ SI_points=[config,MERGED(:,1:3),MERGED(:,11:12), perf,c_norm,e_norm,MERGED(:,9:1
 [~, sort_order] = sort(SI_points(:, 12), 'descend');       % SI Ranking of the configurations
 sorted_matrix = SI_points(sort_order, :);
 
-writematrix(sorted_matrix,'Ranking-env-KER-HYD_v2.xlsx')

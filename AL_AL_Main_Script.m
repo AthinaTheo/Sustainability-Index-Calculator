@@ -34,6 +34,7 @@ var.signals.values=design_param_list;
 % 4 Pillars- Except Performance
 
 e_skin=12.99;       % 12.99 for AL, 57.285 for CFRP, 44.289 for titanium, 57.985 for CFPEEK for no use phase
+e_skin=12.99;       % 12.99 for AL when the operational phase of the LC is green hydrogen fuel for aircrafts
 e_stringer=12.99;
 c_skin=7298.193;        % 5.49 for AL, 190.98 for CFRP, 44.95 for titanium, 262.18 for CFPEEK for no use phase
 c_stringer=7298.193;
@@ -64,10 +65,8 @@ sf=zeros(length(doe_design_param), 1);
 
 for i=1:length(doe_design_param)
 
-    sf(i)=ans.SI_results.signals.values(i+1,4);  %Safety Factor
 
     td(i)=ans.SI_results.signals.values(i+1,5);
-    eig(i)=ans.SI_results.signals.values(i+1,3); %Performance Parameters 
 
     m_skin(i)=ans.SI_results.signals.values(i+1,1);
     m_stringer(i)=ans.SI_results.signals.values(i+1,2);
@@ -76,7 +75,6 @@ for i=1:length(doe_design_param)
     env_skin(i)=e_skin.*m_skin(i);
     env_stringer(i)=e_stringer.*m_stringer(i);
 
-    env(i)=env_skin(i)+env_stringer(i);   %Environmental Impact Pillar
 
 
     cost_skin(i)=c_skin.*m_skin(i);
@@ -85,10 +83,8 @@ for i=1:length(doe_design_param)
     cost(i)=cost_skin(i)+cost_stringer(i);  % Cost Pillar
 
 
-    circ(i)=1;     % Circularity Pillar    1 for AL-AL, 0.5 for CFRP-AL/AL-CFRP/Ti-CFRP, 0 for CFRP-CFRP, 0.426 for CFPEEK-CFPEEK
 
 
-    soc(i)=0.9767; % Social Impact Pillar  1 for AL-AL, 0.885 for AL-CFRP/CFRP-AL, 0.910 for Ti /CFRP, 0.962 for CFRP-CFRP, 0.936 for CFPEEK-CFPEEK
 
 
 
@@ -102,6 +98,5 @@ rows=A(:,4) >= 1.15 & A(:, 4) <= 1.5;
 
 AL_AL=A(rows,:); 
 
-writematrix(AL_AL,'AL-AL-HYDROGEN.xlsx')
 
 
